@@ -7,17 +7,53 @@
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <p id="flashcard-text">
-            Rock
-        </p>
-        <img id="flashcard-image">
-        <div id="buttons">
+        <div id="upper-pane">
+            <p>
+                Stats go here
+            </p>
+        </div>
+        <div id="middle-pane">
+            <p id="flashcard-text">
+                Rock
+            </p>
+            <div id="flashcard-image">
+                <span class="spacer"></span>
+                <!-- <img src="img/sandwich.jpg"> -->
+            </div>
+        </div>
+        <div id="lower-pane">
             <p id="message">
                 Wait for it...
             </p>
-            <input type="button" value="Rock">
-            <input type="button" value="Paper">
-            <input type="button" value="Scissors">
+            <div id="buttons-container">
+                <ul id="buttons">
+                    <!-- Temporary, will be dynamically generated later -->
+                    <li class="button">
+                        <p class="button-number">
+                            1
+                        </p>
+                        <p>
+                            Rock
+                        </p>
+                    </li>
+                    <li class="button">
+                        <p class="button-number">
+                            2
+                        </p>
+                        <p>
+                            Paper
+                        </p>
+                    </li>
+                    <li class="button">
+                        <p class="button-number">
+                            3
+                        </p>
+                        <p>
+                            Scissors
+                        </p>
+                    </li>
+                </ul>
+            </div>
         </div>
     </body>
 </html>
