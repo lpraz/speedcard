@@ -17,6 +17,12 @@ body {
     background-color: #666;
 }
 
+#stats {
+    list-style: none;
+    color: #fff;
+    padding-left: 0;
+}
+
 #middle-pane {
     position: absolute;
     width: 100%;
@@ -73,9 +79,13 @@ body {
 
 .button {
     float: left;
-    width: 5em;
-    border: 1px solid #fff;
+    width: 6em;
+    border: 1px outset #999;
     margin: 0 1em;
+}
+
+.button:active {
+    border: 1px inset #999;
 }
 
 .button-number {

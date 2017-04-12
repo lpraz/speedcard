@@ -5,20 +5,27 @@
             Speedcard: Flashcard Trainer
         </title>
         <link rel="stylesheet" type="text/css" href="style.css">
+        <script type="text/javascript" src="scripts/main.js"></script>
     </head>
-    <body>
+    <body onload="onLoad()">
         <div id="upper-pane">
-            <p>
-                Stats go here
+        <!-- TODO: put some stats/settings here -->
+            <ul id="stats">
+                <li id="timer">
+                    Time: undefined
+                </li>
+                <li id="record">
+                    Correct: 0/0 (0%)
+                </li>
             </p>
         </div>
         <div id="middle-pane">
             <p id="flashcard-text">
-                Rock
+                Placeholder
             </p>
             <div id="flashcard-image">
                 <span class="spacer"></span>
-                <!-- <img src="img/sandwich.jpg"> -->
+                <!-- <img src="img/test.jpg"> -->
             </div>
         </div>
         <div id="lower-pane">
@@ -27,31 +34,6 @@
             </p>
             <div id="buttons-container">
                 <ul id="buttons">
-                    <!-- Temporary, will be dynamically generated later -->
-                    <li class="button">
-                        <p class="button-number">
-                            1
-                        </p>
-                        <p>
-                            Rock
-                        </p>
-                    </li>
-                    <li class="button">
-                        <p class="button-number">
-                            2
-                        </p>
-                        <p>
-                            Paper
-                        </p>
-                    </li>
-                    <li class="button">
-                        <p class="button-number">
-                            3
-                        </p>
-                        <p>
-                            Scissors
-                        </p>
-                    </li>
                 </ul>
             </div>
         </div>
