@@ -7,6 +7,10 @@ String.prototype.format = function() {
 
 var cards = [];
 var activeCard;
+var timerEvent, time;
+var answered = 0;
+var correct = 0;
+var timeAvg;
 
 function onLoad() {
     // TODO: implement images
@@ -56,14 +60,35 @@ function flash() {
     activeCard = Math.floor(Math.random() * cards.length);
     text.innerHTML = cards[activeCard].text;
     
-    setTimeout(flash, 3000);
+    time = 0;
+    timerEvent = setInterval(timerCountUp, 1);
+}
+
+function timerCountUp() {
+    // TODO: needs format string
+    time++;
+    document.getElementById('timer').innerHTML = 'Time: ' + time / 1000 + 's';
 }
 
 function onClickButton(id) {
-    var message = document.getElementById('message');
+    // TODO: needs format string
+    window.clearInterval(timerEvent);
     
-    if (id == activeCard)
+    var message = document.getElementById('message');
+    var record = document.getElementById('record');
+    
+    answered++;
+    
+    if (id == activeCard) {
+        correct++;
         message.innerHTML = 'Correct!';
-    else
+        new Audio('sound/correct.wav').play();
+    } else {
         message.innerHTML = 'Wrong, try again!';
+        new Audio('sound/wrong.wav').play();
+    }
+    
+    record.innerHTML = 'Correct: ' + correct + '/' + answered + '(';
+    
+    setTimeout(flash, 500);
 }
