@@ -7,14 +7,18 @@ String.prototype.format = function() {
 
 var cards = [];
 var activeCard;
+var enabled = true;
+
+var startTime = new Date().getTime();
 var timerEvent, time;
+
 var answered = 0;
 var correct = 0;
+var streak = 0;
 var timeAvg;
 
 function onLoad() {
     // TODO: implement images
-    
     // Push cards onto array
     cards.push({
         answer: 'Rock',
@@ -35,6 +39,14 @@ function onLoad() {
     addButtons(cards);
     
     flash();
+}
+
+window.onkeydown = function(e) {
+    var key = e.keyCode ? e.keyCode : e.which;
+    
+    key -= 49;
+    if (key >= 0 && key < cards.length)
+        onClickButton(key);
 }
 
 function addButtons(cards) {
@@ -61,34 +73,47 @@ function flash() {
     text.innerHTML = cards[activeCard].text;
     
     time = 0;
+    enabled = true;
+    startTime = new Date().getTime();
     timerEvent = setInterval(timerCountUp, 1);
 }
 
 function timerCountUp() {
-    // TODO: needs format string
-    time++;
-    document.getElementById('timer').innerHTML = 'Time: ' + time / 1000 + 's';
+    var TEMPLATE = 'Time: {0}s';
+    time = new Date().getTime() - startTime;
+    document.getElementById('timer').innerHTML = TEMPLATE.format(time / 1000);
 }
 
 function onClickButton(id) {
+    var CORRECT_TEMPLATE = 'Correct: {0}/{1} ({2}%)';
+    var STREAK_TEMPLATE = 'Streak: {0}';
     // TODO: needs format string
     window.clearInterval(timerEvent);
     
     var message = document.getElementById('message');
-    var record = document.getElementById('record');
+    var recordMessage = document.getElementById('record');
+    var streakMessage = document.getElementById('streak');
     
+    if (!enabled)
+        return;
+    
+    enabled = false;
     answered++;
     
     if (id == activeCard) {
         correct++;
+        streak++;
         message.innerHTML = 'Correct!';
         new Audio('sound/correct.wav').play();
     } else {
+        streak = 0;
         message.innerHTML = 'Wrong, try again!';
         new Audio('sound/wrong.wav').play();
     }
     
-    record.innerHTML = 'Correct: ' + correct + '/' + answered + '(';
+    recordMessage.innerHTML = CORRECT_TEMPLATE.format(correct, answered, 
+            parseInt(correct * 10000 / answered) / 100);
+    streakMessage.innerHTML = STREAK_TEMPLATE.format(streak);
     
     setTimeout(flash, 500);
 }
