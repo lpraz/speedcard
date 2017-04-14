@@ -1,3 +1,4 @@
+// String formatter
 String.prototype.format = function() {
     var args = arguments;
     return this.replace(/{(\d+)}/g, function(match, number) {
@@ -15,7 +16,7 @@ var timerEvent, time;
 var answered = 0;
 var correct = 0;
 var streak = 0;
-var timeAvg;
+var timeAvg = 0;
 
 function onLoad() {
     // TODO: implement images
@@ -38,15 +39,32 @@ function onLoad() {
     // Populate row of buttons based on array
     addButtons(cards);
     
+    // Flash a card
     flash();
 }
 
 window.onkeydown = function(e) {
     var key = e.keyCode ? e.keyCode : e.which;
-    
     key -= 49;
-    if (key >= 0 && key < cards.length)
+    
+    var button = document.getElementById('buttons')
+            .getElementsByTagName("LI")[key];
+    
+    if (key >= 0 && key < cards.length) {
         onClickButton(key);
+        button.style.border = '1px inset #999';
+    }
+}
+
+window.onkeyup = function(e) {
+    var key = e.keyCode ? e.keyCode : e.which;
+    key -= 49;
+    
+    var button = document.getElementById('buttons')
+            .getElementsByTagName("LI")[key];
+    
+    if (key >= 0 && key < cards.length)
+        button.style.border = '1px outset #999';
 }
 
 function addButtons(cards) {
@@ -85,21 +103,31 @@ function timerCountUp() {
 }
 
 function onClickButton(id) {
+    // Format string templates
     var CORRECT_TEMPLATE = 'Correct: {0}/{1} ({2}%)';
     var STREAK_TEMPLATE = 'Streak: {0}';
-    // TODO: needs format string
-    window.clearInterval(timerEvent);
+    var TIME_AVG_TEMPLATE = 'Average time: {0}s';
     
+    // HTML elements
     var message = document.getElementById('message');
     var recordMessage = document.getElementById('record');
     var streakMessage = document.getElementById('streak');
+    var timeAvgMessage = document.getElementById('avg-time');
     
+    // Do nothing if button input disabled
     if (!enabled)
         return;
     
-    enabled = false;
-    answered++;
+    window.clearInterval(timerEvent);
     
+    // Disable further input from the buttons
+    enabled = false;
+    
+    // Stats that update regardless of correct answer
+    answered++;
+    timeAvg = (timeAvg + time) / answered;
+    
+    // If correct button (not) pressed, update necessary stats/elements
     if (id == activeCard) {
         correct++;
         streak++;
@@ -111,9 +139,13 @@ function onClickButton(id) {
         new Audio('sound/wrong.wav').play();
     }
     
+    // Update HTML elements containing stats
     recordMessage.innerHTML = CORRECT_TEMPLATE.format(correct, answered, 
             parseInt(correct * 10000 / answered) / 100);
     streakMessage.innerHTML = STREAK_TEMPLATE.format(streak);
+    timeAvgMessage.innerHTML = TIME_AVG_TEMPLATE.format(
+            parseInt(timeAvg) / 1000);
     
+    // Wait 0.5 seconds before flashing the next card
     setTimeout(flash, 500);
 }
