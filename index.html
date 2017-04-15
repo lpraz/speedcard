@@ -9,7 +9,15 @@
     </head>
     <body onload="onLoad()">
         <div id="upper-pane">
-        <!-- TODO: put some stats/settings here -->
+            <div id="left-container">
+                <p>
+                    <input id="start" type="button" value="Start" onclick="onClickStart()">
+                </p>
+                <p>
+                    <label for="autofail">Auto-fail in (seconds):</label>
+                    <input id="autofail">
+                </p>
+            </div>
             <ul id="stats">
                 <li id="timer">
                     Time: undefined
@@ -23,7 +31,7 @@
                 <li id="avg-time">
                     Average time: 0
                 </li>
-            </p>
+            </ul>
         </div>
         <div id="middle-pane">
             <p id="flashcard-text">

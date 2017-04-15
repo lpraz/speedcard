@@ -14,13 +14,22 @@ body {
     width: 100%;
     top: 0;
     height: 10%;
+    color: #fff;
     background-color: #666;
+}
+
+#left-container {
+    display: inline-block;
+    text-align: left;
+    float: left;
+    padding: 0 1em;
+    height: 100%;
 }
 
 #stats {
     list-style: none;
-    color: #fff;
     padding-left: 0;
+    width: 30
 }
 
 #middle-pane {

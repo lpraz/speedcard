@@ -8,6 +8,8 @@ String.prototype.format = function() {
 
 var cards = [];
 var activeCard;
+
+var started = false;
 var enabled = true;
 
 var startTime = new Date().getTime();
@@ -38,9 +40,6 @@ function onLoad() {
     
     // Populate row of buttons based on array
     addButtons(cards);
-    
-    // Flash a card
-    flash();
 }
 
 window.onkeydown = function(e) {
@@ -100,6 +99,19 @@ function timerCountUp() {
     var TEMPLATE = 'Time: {0}s';
     time = new Date().getTime() - startTime;
     document.getElementById('timer').innerHTML = TEMPLATE.format(time / 1000);
+}
+
+function onClickStart() {
+    var startButton = document.getElementById('start');
+    started = !started;
+    
+    if (started) {
+        flash();
+        start.value = 'Stop';
+    } else {
+        clearInterval(timerEvent);
+        start.value = 'Start';
+    }
 }
 
 function onClickButton(id) {
