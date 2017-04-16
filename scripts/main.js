@@ -10,10 +10,12 @@ var cards = [];
 var activeCard;
 
 var started = false;
-var enabled = true;
+var enabled = false;
 
 var startTime = new Date().getTime();
-var timerEvent, time;
+var timerEvent;
+var time;
+var waitEvent;
 
 var answered = 0;
 var correct = 0;
@@ -42,7 +44,23 @@ function onLoad() {
     addButtons(cards);
 }
 
+function reset() {
+    time = 0;
+    answered = 0;
+    correct = 0;
+    streak = 0;
+    timeAvg = 0;
+    
+    document.getElementById('timer').innerHTML = 'Time: 0s';
+    document.getElementById('record').innerHTML = 'Correct: 0/0 (0%)';
+    document.getElementById('streak').innerHTML = 'Streak: 0';
+    document.getElementById('avg-time').innerHTML = 'Average time: 0s';
+}
+
 window.onkeydown = function(e) {
+    if (document.activeElement == document.getElementById('autofail'))
+        return;
+    
     var key = e.keyCode ? e.keyCode : e.which;
     key -= 49;
     
@@ -92,13 +110,21 @@ function flash() {
     time = 0;
     enabled = true;
     startTime = new Date().getTime();
+    document.getElementById('message').innerHTML = 'Wait for it...'
     timerEvent = setInterval(timerCountUp, 1);
 }
 
 function timerCountUp() {
     var TEMPLATE = 'Time: {0}s';
+    var autoFail = document.getElementById('autofail');
+    
     time = new Date().getTime() - startTime;
     document.getElementById('timer').innerHTML = TEMPLATE.format(time / 1000);
+    
+    if (autoFail.value && autoFail.value * 1000 < time) {
+        clearInterval(timerEvent);
+        onClickButton(-1);
+    }
 }
 
 function onClickStart() {
@@ -110,6 +136,8 @@ function onClickStart() {
         start.value = 'Stop';
     } else {
         clearInterval(timerEvent);
+        clearInterval(waitEvent);
+        enabled = false;
         start.value = 'Start';
     }
 }
@@ -130,7 +158,7 @@ function onClickButton(id) {
     if (!enabled)
         return;
     
-    window.clearInterval(timerEvent);
+    clearInterval(timerEvent);
     
     // Disable further input from the buttons
     enabled = false;
@@ -158,6 +186,6 @@ function onClickButton(id) {
     timeAvgMessage.innerHTML = TIME_AVG_TEMPLATE.format(
             parseInt(timeAvg) / 1000);
     
-    // Wait 0.5 seconds before flashing the next card
-    setTimeout(flash, 500);
+    // Wait 1 second before flashing the next card
+    waitEvent = setTimeout(flash, 1000);
 }

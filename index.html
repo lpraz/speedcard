@@ -10,32 +10,35 @@
     <body onload="onLoad()">
         <div id="upper-pane">
             <div id="left-container">
+                <ul id="stats">
+                    <li id="timer">
+                        Time: 0s
+                    </li>
+                    <li id="record">
+                        Correct: 0/0 (0%)
+                    </li>
+                    <li id="streak">
+                        Streak: 0
+                    </li>
+                    <li id="avg-time">
+                        Average time: 0s
+                    </li>
+                </ul>
+            </div>
+            <div id="right-container">
                 <p>
                     <input id="start" type="button" value="Start" onclick="onClickStart()">
+                    <input id="reset" type="button" value="Reset" onclick="reset()">
                 </p>
                 <p>
                     <label for="autofail">Auto-fail in (seconds):</label>
                     <input id="autofail">
                 </p>
             </div>
-            <ul id="stats">
-                <li id="timer">
-                    Time: undefined
-                </li>
-                <li id="record">
-                    Correct: 0/0 (0%)
-                </li>
-                <li id="streak">
-                    Streak: 0
-                </li>
-                <li id="avg-time">
-                    Average time: 0
-                </li>
-            </ul>
         </div>
         <div id="middle-pane">
             <p id="flashcard-text">
-                Placeholder
+                
             </p>
             <div id="flashcard-image">
                 <span class="spacer"></span>
@@ -44,7 +47,7 @@
         </div>
         <div id="lower-pane">
             <p id="message">
-                Wait for it...
+                Click "Start"!
             </p>
             <div id="buttons-container">
                 <ul id="buttons">
