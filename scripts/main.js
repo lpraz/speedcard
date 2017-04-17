@@ -55,6 +55,7 @@ function reset() {
     document.getElementById('record').innerHTML = 'Correct: 0/0 (0%)';
     document.getElementById('streak').innerHTML = 'Streak: 0';
     document.getElementById('avg-time').innerHTML = 'Average time: 0s';
+    document.getElementById('flashcard-text').innerHTML = '';
 }
 
 window.onkeydown = function(e) {
@@ -129,6 +130,7 @@ function timerCountUp() {
 
 function onClickStart() {
     var startButton = document.getElementById('start');
+    var message = document.getElementById('message');
     started = !started;
     
     if (started) {
@@ -139,7 +141,16 @@ function onClickStart() {
         clearInterval(waitEvent);
         enabled = false;
         start.value = 'Start';
+        message.innerHTML = 'Click "Start"!';
     }
+}
+
+function openEditDialog() {
+    document.getElementById('edit-dialog').style.visibility = 'visible';
+}
+
+function closeEditDialog() {
+    document.getElementById('edit-dialog').style.visibility = 'hidden';
 }
 
 function onClickButton(id) {

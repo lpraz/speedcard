@@ -29,6 +29,7 @@
                 <p>
                     <input id="start" type="button" value="Start" onclick="onClickStart()">
                     <input id="reset" type="button" value="Reset" onclick="reset()">
+                    <input id="edit" type="button" value="Edit Cards..." onclick="openEditDialog()">
                 </p>
                 <p>
                     <label for="autofail">Auto-fail in (seconds):</label>
@@ -53,6 +54,11 @@
                 <ul id="buttons">
                 </ul>
             </div>
+        </div>
+        <div id="edit-dialog">
+            <div id="cards-container">
+            </div>
+            <input type="button" value="Close" onclick="closeEditDialog()">
         </div>
     </body>
 </html>

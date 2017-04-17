@@ -13,7 +13,7 @@ body {
     position: absolute;
     width: 100%;
     top: 0;
-    height: 10%;
+    height: 7em;
     color: #fff;
     background-color: #666;
 }
@@ -71,8 +71,8 @@ body {
 #lower-pane {
     position: absolute;
     width: 100%;
-    height: 20%;
-    top: 80%;
+    height: 12em;
+    top: calc(100% - 12em);
     background-color: #666;
 }
 
@@ -113,4 +113,22 @@ body {
 
 #message {
     color: #fff;
+}
+
+#edit-dialog {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px outset #999;
+    padding: 1em;
+    background-color: #fff;
+    visibility: hidden;
+}
+
+#cards-container {
+    width: 30vw;
+    height: 30vh;
+    margin-bottom: 1em;
+    overflow: auto;
 }
