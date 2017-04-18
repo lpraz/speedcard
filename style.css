@@ -126,9 +126,14 @@ body {
     visibility: hidden;
 }
 
-#cards-container {
+#edit-cards-container {
     width: 30vw;
     height: 30vh;
     margin-bottom: 1em;
+    text-align: left;
     overflow: auto;
+}
+
+.edit-card-entry {
+    margin-bottom: 1em;
 }

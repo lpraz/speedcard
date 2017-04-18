@@ -41,7 +41,8 @@ function onLoad() {
     });
     
     // Populate row of buttons based on array
-    addButtons(cards);
+    populateButtons(cards);
+    populateEditDialog(cards);
 }
 
 function reset() {
@@ -85,7 +86,7 @@ window.onkeyup = function(e) {
         button.style.border = '1px outset #999';
 }
 
-function addButtons(cards) {
+function populateButtons(cards) {
     var TEMPLATE = 
         '<li class="button" onClick="onClickButton({0})">\n' +
         '   <p class="button-number">\n'+
@@ -96,10 +97,25 @@ function addButtons(cards) {
         '   </p>\n' +
         '</li>';
     var buttons = document.getElementById('buttons');
+    buttons.innerHTML = '';
     
-    for (var i = 0; i < cards.length; i++) {
+    for (var i = 0; i < cards.length; i++)
         buttons.innerHTML += TEMPLATE.format(i, i + 1, cards[i].answer);
-    }
+}
+
+function populateEditDialog(cards) {
+    var TEMPLATE =
+        '<li class="edit-card-entry">\n' +
+        '    Name: <input><br>\n' +
+        '    Correct response to: <input><br>\n' +
+        '    <input type="button" value="Remove">\n' +
+        '</li>';
+    
+    var entries = document.getElementById('edit-cards-container');
+    entries.innerHTML = '';
+    
+    for (var i = 0; i < cards.length; i++)
+        entries.innerHTML += TEMPLATE.format();
 }
 
 function flash() {
