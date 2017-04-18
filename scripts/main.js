@@ -41,8 +41,8 @@ function onLoad() {
     });
     
     // Populate row of buttons based on array
-    populateButtons(cards);
-    populateEditDialog(cards);
+    populateButtons();
+    populateEditDialog();
 }
 
 function reset() {
@@ -86,13 +86,13 @@ window.onkeyup = function(e) {
         button.style.border = '1px outset #999';
 }
 
-function populateButtons(cards) {
+function populateButtons() {
     var TEMPLATE = 
         '<li class="button" onClick="onClickButton({0})">\n' +
         '   <p class="button-number">\n'+
         '       {1}\n' +
         '   </p>\n' +
-        '   <p>\n' +
+        '   <p class="button-answer">\n' +
         '       {2}\n' +
         '   </p>\n' +
         '</li>';
@@ -103,19 +103,50 @@ function populateButtons(cards) {
         buttons.innerHTML += TEMPLATE.format(i, i + 1, cards[i].answer);
 }
 
-function populateEditDialog(cards) {
+function populateEditDialog() {
     var TEMPLATE =
         '<li class="edit-card-entry">\n' +
-        '    Name: <input><br>\n' +
-        '    Correct response to: <input><br>\n' +
-        '    <input type="button" value="Remove">\n' +
+        '    Answer: <input value="{0}" ' +
+                'onchange="updateCardAnswer({2}, this.value)"><br>\n' +
+        '    Correct response to: <input value="{1}" ' +
+                'onchange="updateCardText({2}, this.value)"><br>\n' +
+        '    <input type="button" value="Remove" ' +
+                'onClick="removeCard({2})">\n' +
         '</li>';
     
     var entries = document.getElementById('edit-cards-container');
     entries.innerHTML = '';
     
     for (var i = 0; i < cards.length; i++)
-        entries.innerHTML += TEMPLATE.format();
+        entries.innerHTML += TEMPLATE.format(
+                cards[i].answer, cards[i].text, i);
+}
+
+function addCard() {
+    cards.splice(cards.length, 0, {
+        answer: '',
+        text: ''
+    });
+    populateButtons();
+    populateEditDialog();
+}
+
+function removeCard(id) {
+    cards.splice(id, 1);
+    populateButtons();
+    populateEditDialog();
+}
+
+function updateCardAnswer(id, newString) {
+    cards[id].answer = newString;
+    populateButtons();
+    populateEditDialog();
+}
+
+function updateCardText(id, newString) {
+    cards[id].text = newString;
+    populateButtons();
+    populateEditDialog();
 }
 
 function flash() {

@@ -106,9 +106,11 @@ body {
     margin: 0.5em;
 }
 
-.button-name {
+.button-answer {
+    min-height: 12pt;
     font-size: 12pt;
     line-height: 12pt;
+    overflow: hidden;
 }
 
 #message {
