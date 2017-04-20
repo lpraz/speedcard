@@ -105,7 +105,10 @@ function populateButtons() {
 
 function populateEditDialog() {
     var TEMPLATE =
-        '<li class="edit-card-entry">\n' +
+        '<li class="edit-card-entry" draggable="true" ' +
+                'ondragover="onDragOver(event, this)" ' +
+                'ondragleave="onDragLeave(event, this)" ' +
+                'ondrop="onDragDrop(event, {2})">\n' +
         '    Answer: <input value="{0}" ' +
                 'onchange="updateCardAnswer({2}, this.value)"><br>\n' +
         '    Correct response to: <input value="{1}" ' +
@@ -147,6 +150,22 @@ function updateCardText(id, newString) {
     cards[id].text = newString;
     populateButtons();
     populateEditDialog();
+}
+
+function onDragOver(event, card) {
+    event.preventDefault();
+    card.style.borderTop = '1px solid #666';
+}
+
+function onDragLeave(event, card) {
+    event.preventDefault();
+    card.style.borderTop = '1px solid rgba(255, 255, 255, 0)';
+}
+
+function onDragDrop(event, id) {
+    event.preventDefault();
+    var removed // = the card being dragged
+    cards.splice(id, 0, removed);
 }
 
 function flash() {
