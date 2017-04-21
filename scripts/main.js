@@ -106,15 +106,16 @@ function populateButtons() {
 function populateEditDialog() {
     var TEMPLATE =
         '<li class="edit-card-entry" draggable="true" ' +
+                'ondragstart="onDragStart(event, {0})" ' +
                 'ondragover="onDragOver(event, this)" ' +
                 'ondragleave="onDragLeave(event, this)" ' +
-                'ondrop="onDragDrop(event, {2})">\n' +
-        '    Answer: <input value="{0}" ' +
-                'onchange="updateCardAnswer({2}, this.value)"><br>\n' +
-        '    Correct response to: <input value="{1}" ' +
-                'onchange="updateCardText({2}, this.value)"><br>\n' +
+                'ondrop="onDragDrop(event, {0})">\n' +
+        '    Answer: <input value="{1}" ' +
+                'onchange="updateCardAnswer({0}, this.value)"><br>\n' +
+        '    Correct response to: <input value="{2}" ' +
+                'onchange="updateCardText({0}, this.value)"><br>\n' +
         '    <input type="button" value="Remove" ' +
-                'onClick="removeCard({2})">\n' +
+                'onClick="removeCard({0})">\n' +
         '</li>';
     
     var entries = document.getElementById('edit-cards-container');
@@ -122,7 +123,7 @@ function populateEditDialog() {
     
     for (var i = 0; i < cards.length; i++)
         entries.innerHTML += TEMPLATE.format(
-                cards[i].answer, cards[i].text, i);
+                i, cards[i].answer, cards[i].text);
 }
 
 function addCard() {
@@ -152,6 +153,10 @@ function updateCardText(id, newString) {
     populateEditDialog();
 }
 
+function onDragStart(event, id) {
+    event.dataTransfer.setData("draggedId", id);
+}
+
 function onDragOver(event, card) {
     event.preventDefault();
     card.style.borderTop = '1px solid #666';
@@ -164,8 +169,11 @@ function onDragLeave(event, card) {
 
 function onDragDrop(event, id) {
     event.preventDefault();
-    var removed // = the card being dragged
+    var removed = cards.splice(event.dataTransfer.getData("draggedId"), 1)
+            .pop();
     cards.splice(id, 0, removed);
+    populateButtons();
+    populateEditDialog();
 }
 
 function flash() {

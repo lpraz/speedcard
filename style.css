@@ -138,4 +138,5 @@ body {
 
 .edit-card-entry {
     margin-bottom: 1em;
+    border-top: 1px solid rgba(255, 255, 255, 0);
 }
