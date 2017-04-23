@@ -24,7 +24,7 @@ var timeAvg = 0;
 
 function onLoad() {
     // TODO: implement images
-    // Push cards onto array
+    // Push default cards onto array
     cards.push({
         answer: 'Rock',
         text: 'Scissors'
@@ -112,8 +112,10 @@ function populateEditDialog() {
                 'ondrop="onDragDrop(event, {0})">\n' +
         '    Answer: <input value="{1}" ' +
                 'onchange="updateCardAnswer({0}, this.value)"><br>\n' +
-        '    Correct response to: <input value="{2}" ' +
+        '    Question text: <input value="{2}" ' +
                 'onchange="updateCardText({0}, this.value)"><br>\n' +
+        '    Question image: <input type="file" ' +
+                'onchange="updateCardImage(event, {0})"><br>\n' +
         '    <input type="button" value="Remove" ' +
                 'onClick="removeCard({0})">\n' +
         '</li>';
@@ -151,6 +153,11 @@ function updateCardText(id, newString) {
     cards[id].text = newString;
     populateButtons();
     populateEditDialog();
+}
+
+function updateCardImage(event, id) {
+    var files = event.target.files;
+    console.log(files);
 }
 
 function onDragStart(event, id) {
