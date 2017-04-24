@@ -52,7 +52,7 @@ body {
     text-align: center;
 }
 
-#flashcard-image {
+#flashcard-image-container {
     position: absolute;
     height: 100%;
     width: 100%;
@@ -64,8 +64,9 @@ body {
     vertical-align: middle;
 }
 
-#flashcard-image img {
+#flashcard-image {
     vertical-align: middle;
+    max-height: 80%;
 }
 
 #lower-pane {

@@ -22,8 +22,9 @@ var correct = 0;
 var streak = 0;
 var timeAvg = 0;
 
+var fileReader;
+
 function onLoad() {
-    // TODO: implement images
     // Push default cards onto array
     cards.push({
         answer: 'Rock',
@@ -39,6 +40,13 @@ function onLoad() {
         answer: 'Scissors',
         text: 'Paper'
     });
+    
+    // Init file reader
+    fileReader = new FileReader();
+    fileReader.onload = function(loadEvent) {
+        document.getElementById('flashcard-image').src
+                = loadEvent.target.result;
+    }
     
     // Populate row of buttons based on array
     populateButtons();
@@ -133,6 +141,7 @@ function addCard() {
         answer: '',
         text: ''
     });
+    
     populateButtons();
     populateEditDialog();
 }
@@ -156,8 +165,19 @@ function updateCardText(id, newString) {
 }
 
 function updateCardImage(event, id) {
-    var files = event.target.files;
-    console.log(files);
+    var file = event.target.files;
+    cards[id].image = file;
+    
+    /* How this gets done, for reference:
+    // On load, render the image in #flashcard-image
+    reader.onload = function(loadEvent) {
+        document.getElementById('flashcard-image').src
+                = loadEvent.target.result;
+    };
+    
+    // Load the image as a data URL
+    reader.readAsDataURL(file);
+    */
 }
 
 function onDragStart(event, id) {
@@ -185,14 +205,20 @@ function onDragDrop(event, id) {
 
 function flash() {
     var text = document.getElementById('flashcard-text');
+    var image = document.getElementById('flashcard-image');
     
     activeCard = Math.floor(Math.random() * cards.length);
-    text.innerHTML = cards[activeCard].text;
     
+    // UI
+    text.innerHTML = cards[activeCard].text;
+    if (cards[activeCard].image)
+        fileReader.readAsDataURL(cards[activeCard].image);
+    document.getElementById('message').innerHTML = 'Wait for it...'
+    
+    // Timer
     time = 0;
     enabled = true;
     startTime = new Date().getTime();
-    document.getElementById('message').innerHTML = 'Wait for it...'
     timerEvent = setInterval(timerCountUp, 1);
 }
 
