@@ -46,7 +46,7 @@ function onLoad() {
     fileReader.onload = function(loadEvent) {
         document.getElementById('flashcard-image').src
                 = loadEvent.target.result;
-    }
+    };
     
     // Populate row of buttons based on array
     populateButtons();
@@ -165,19 +165,8 @@ function updateCardText(id, newString) {
 }
 
 function updateCardImage(event, id) {
-    var file = event.target.files;
+    var file = event.target.files[0];
     cards[id].image = file;
-    
-    /* How this gets done, for reference:
-    // On load, render the image in #flashcard-image
-    reader.onload = function(loadEvent) {
-        document.getElementById('flashcard-image').src
-                = loadEvent.target.result;
-    };
-    
-    // Load the image as a data URL
-    reader.readAsDataURL(file);
-    */
 }
 
 function onDragStart(event, id) {
@@ -210,9 +199,14 @@ function flash() {
     activeCard = Math.floor(Math.random() * cards.length);
     
     // UI
-    text.innerHTML = cards[activeCard].text;
-    if (cards[activeCard].image)
+    if (cards[activeCard].image) {
         fileReader.readAsDataURL(cards[activeCard].image);
+        text.innerHTML = '';
+    } else {
+        image.src = '';
+        text.innerHTML = cards[activeCard].text;
+    }
+        
     document.getElementById('message').innerHTML = 'Wait for it...'
     
     // Timer
