@@ -207,7 +207,12 @@ function flash() {
         text.innerHTML = cards[activeCard].text;
     }
         
-    document.getElementById('message').innerHTML = 'Wait for it...'
+    document.getElementById('message').innerHTML = 'Press a button!'
+    
+    if (document.getElementById('sound').checked)
+        new Audio('sound/flash.wav').play();
+    
+    document.body.style.background = '#fff';
     
     // Timer
     time = 0;
@@ -232,8 +237,11 @@ function timerCountUp() {
 function onClickStart() {
     var startButton = document.getElementById('start');
     var message = document.getElementById('message');
+    
+    // If started, stop. If stopped, start.
     started = !started;
     
+    // If we're (not) starting...
     if (started) {
         flash();
         start.value = 'Stop';
@@ -265,6 +273,8 @@ function onClickButton(id) {
     var recordMessage = document.getElementById('record');
     var streakMessage = document.getElementById('streak');
     var timeAvgMessage = document.getElementById('avg-time');
+    var soundEnable = document.getElementById('sound');
+    var backgroundEnable = document.getElementById('background');
     
     // Do nothing if button input disabled
     if (!enabled)
@@ -284,11 +294,22 @@ function onClickButton(id) {
         correct++;
         streak++;
         message.innerHTML = 'Correct!';
-        new Audio('sound/correct.wav').play();
+        
+        if (soundEnable.checked)
+            new Audio('sound/correct.wav').play();
+        
+        if (backgroundEnable.checked)
+            document.body.style.background = '#9f9';
     } else {
         streak = 0;
-        message.innerHTML = 'Wrong, try again!';
-        new Audio('sound/wrong.wav').play();
+        message.innerHTML = 'Incorrect, try again! (answer: {0})'
+                .format(cards[activeCard].answer);
+        
+        if (soundEnable.checked)
+            new Audio('sound/wrong.wav').play();
+        
+        if (backgroundEnable.checked)
+            document.body.style.background = '#f99';
     }
     
     // Update HTML elements containing stats
