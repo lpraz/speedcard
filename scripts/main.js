@@ -258,6 +258,20 @@ function openEditDialog() {
     document.getElementById('edit-dialog').style.visibility = 'visible';
 }
 
+function showEditCards() {
+    document.getElementById('edit-cards-pane').style.display
+            = 'inline';
+    document.getElementById('edit-settings-pane').style.display
+            = 'none';
+}
+
+function showSettings() {
+    document.getElementById('edit-cards-pane').style.display
+            = 'none';
+    document.getElementById('edit-settings-pane').style.display
+            = 'inline';
+}
+
 function closeEditDialog() {
     document.getElementById('edit-dialog').style.visibility = 'hidden';
 }

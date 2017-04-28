@@ -32,12 +32,6 @@
                     <input id="edit" type="button" value="Edit Cards..." onclick="openEditDialog()">
                 </p>
                 <p>
-                    <label for="autofail">Auto-fail in (seconds):</label>
-                    <input id="autofail" size="4">
-                    <label for="sound">Play sound:</label>
-                    <input id="sound" type="checkbox" checked="true">
-                    <label for="background">Change background colour:</label>
-                    <input id="background" type="checkbox" checked="true">
                 </p>
             </div>
         </div>
@@ -58,10 +52,30 @@
             </div>
         </div>
         <div id="edit-dialog">
-            <ol id="edit-cards-container">
-            </ol>
-            <input type="button" value="Add New" onClick="addCard()">
-            <input type="button" value="Close" onclick="closeEditDialog()">
+            <ul id="edit-dialog-tabs">
+                <li><a href="javascript:;" onclick="showEditCards()">Edit Cards</a></li>
+                <li><a href="javascript:;" onclick="showSettings()">Settings</a></li>
+            </ul>
+            <input id="edit-close-button" type="button" value="X" onClick="closeEditDialog()">
+            <div id="edit-cards-pane">
+                <ol id="edit-cards-container">
+                </ol>
+                <input type="button" value="Add New" onClick="addCard()">
+            </div>
+            <div id="edit-settings-pane">
+                <p>
+                    <label for="autofail">Auto-fail in (seconds):</label>
+                    <input id="autofail" size="4">
+                </p>
+                <p>
+                    <label for="sound">Play sound:</label>
+                    <input id="sound" type="checkbox" checked="true">
+                </p>
+                <p>
+                    <label for="background">Change background colour:</label>
+                    <input id="background" type="checkbox" checked="true">
+                </p>
+            </div>
         </div>
     </body>
 </html>

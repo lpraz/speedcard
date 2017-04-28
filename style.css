@@ -123,21 +123,40 @@ body {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    width: 40vw;
+    height: 40vh;
     border: 1px outset #999;
     padding: 1em;
     background-color: #fff;
     visibility: hidden;
+    text-align: left;
+}
+
+#edit-close-button {
+    float: right;
+}
+
+#edit-dialog-tabs {
+    display: inline;
+    list-style: none;
+}
+
+#edit-dialog-tabs li {
+    float: left;
+    margin: 0.25em;
 }
 
 #edit-cards-container {
-    width: 30vw;
     height: 30vh;
     margin-bottom: 1em;
-    text-align: left;
     overflow: auto;
 }
 
 .edit-card-entry {
     margin-bottom: 1em;
     border-top: 1px solid rgba(255, 255, 255, 0);
+}
+
+#edit-settings-pane {
+    display: none;
 }
